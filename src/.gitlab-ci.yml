@@ -1,0 +1,34 @@
+image: node:8.10
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - test
+
+before_script:
+
+unit test:
+  stage: test
+  script:
+    - npm install
+    - npm test
+  environment: dev
+
+codequality:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:dind
+  script:
+    - docker pull codeclimate/codeclimate 
+    - docker run -v /tmp/cc:/tmp/cc -v "$PWD":/code -v /var/run/docker.sock:/var/run/docker.sock codeclimate/codeclimate validate-config
+    - ls -lash $PWD
+    - echo $PWD
+    - docker run --env CODECLIMATE_CODE="$PWD" -v "$PWD":/code -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > gl-code-quality-report.json
+  environment: dev
+  artifacts:
+    paths: [gl-code-quality-report.json]
+
