@@ -1,5 +1,5 @@
 {
-  "name": "services-container",
+  "name": "@spark/services-container",
   "version": "1.0.0",
   "description": "A javascript injection of dependencies container",
   "main": "src/index.js",
