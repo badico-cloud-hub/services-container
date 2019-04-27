@@ -18,6 +18,18 @@ class Container {
 
         return this;
     }
+
+    register(fn) {
+        const { injectable, inject } = fn
+        if (injectable) {
+            this.service(fn.name, (c) => fn.bind(null,...inject.reduce(
+                (arr, dep) => [...arr, c[dep]],  
+                []))
+            )
+        } else {
+            this.service(fn.name, () => fn)
+        }
+    }
 }
 
 module.exports = Container
