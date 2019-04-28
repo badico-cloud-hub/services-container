@@ -31,6 +31,16 @@ class Container {
             this.service(fn.name, () => fn)
         }
     }
+
+    inject(registerName) {
+        return function decorator(target) {
+            if (registerName) {
+                target = this[registerName][target.name]
+            } else {
+                target = this[target.name]
+            }
+        }
+    }
 }
 
 module.exports = Container
