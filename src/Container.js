@@ -20,10 +20,11 @@ class Container {
     }
 
     register(fn) {
-        const { injectable, inject } = fn
-        if (injectable) {
-            this.service(fn.name, (c) => fn.bind(null,...inject.reduce(
-                (arr, dep) => [...arr, c[dep]],  
+        const { inject } = fn
+        if (inject) {
+            this.service(fn.name, (container) => fn.bind(null,...inject.reduce(
+                (dependenciesList, dependencieName) =>
+                    dependenciesList.push(container[dependencieName]), 
                 []))
             )
         } else {
