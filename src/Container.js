@@ -18,6 +18,29 @@ class Container {
 
         return this;
     }
+
+    register(fn) {
+        const { inject } = fn
+        if (inject) {
+            this.service(fn.name, (container) => fn.bind(null,...inject.reduce(
+                (dependenciesList, dependencieName) =>
+                    dependenciesList.push(container[dependencieName]), 
+                []))
+            )
+        } else {
+            this.service(fn.name, () => fn)
+        }
+    }
+
+    inject(registerName) {
+        return function decorator(target) {
+            if (registerName) {
+                target = this[registerName][target.name]
+            } else {
+                target = this[target.name]
+            }
+        }
+    }
 }
 
 module.exports = Container
