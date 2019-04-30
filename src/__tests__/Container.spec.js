@@ -15,3 +15,15 @@ describe('Container spec - register method', () => {
     it('should be able to define a service with autoCall, no injection needed')
     it('should be able to define a service with autoCall, injection needed')
 })
+
+describe('Container spec - batch register', () => {
+  
+})
+
+describe('Container spec - json register', () => {
+  
+})
+
+describe('Container spec - constructor with json', () => {
+  
+})

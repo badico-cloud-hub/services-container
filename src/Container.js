@@ -1,6 +1,7 @@
 class Container {
-    constructor(){
-        this.services = {};
+    constructor(data){
+        this.services = {}
+        data && this.json(data)
     }
 
     service(name, cb){
@@ -29,6 +30,24 @@ class Container {
             return autoCall ? boundFn() : boundFn
         })
         
+    }
+
+    batch(list) {
+        list.reduce((c, fn) => c.register(fn), this)
+    }
+    
+    json(list) {
+        this.batch(
+            list.map(this.require)
+        )
+    }
+
+    require(filepath) {
+        return require(this.path(filepath))
+    }
+
+    path(filepath) {
+        return `../${filepath}`
     }
 
 }
