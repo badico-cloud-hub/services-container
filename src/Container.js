@@ -23,8 +23,7 @@ class Container {
         const { inject } = fn
         if (inject) {
             this.service(fn.name, (container) => fn.bind(null,...inject.reduce(
-                (dependenciesList, dependencieName) =>
-                    dependenciesList.push(container[dependencieName]), 
+                (dependenciesList, dependencieName) => ([ ...dependenciesList, container[dependencieName]]), 
                 []))
             )
         } else {
