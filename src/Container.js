@@ -20,26 +20,15 @@ class Container {
     }
 
     register(fn) {
-        const { inject } = fn
-        if (inject) {
-            this.service(fn.name, (container) => fn.bind(null,...inject.reduce(
+        const { inject, obj } = fn
+        const boundFn = fn.bind(null,...(inject || []).reduce(
                 (dependenciesList, dependencieName) => ([ ...dependenciesList, container[dependencieName]]), 
                 []))
-            )
-        } else {
-            this.service(fn.name, () => fn)
-        }
+
+        this.service(fn.name, (container) => obj ? boundFn() : boundFn)
+        
     }
 
-    inject(registerName) {
-        return function decorator(target) {
-            if (registerName) {
-                target = this[registerName][target.name]
-            } else {
-                target = this[target.name]
-            }
-        }
-    }
 }
 
 module.exports = Container
