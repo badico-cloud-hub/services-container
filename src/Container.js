@@ -21,11 +21,13 @@ class Container {
 
     register(fn) {
         const { inject, obj } = fn
-        const boundFn = fn.bind(null,...(inject || []).reduce(
+
+        this.service(fn.name, (container) => { 
+            const boundFn = fn.bind(null,...(inject || []).reduce(
                 (dependenciesList, dependencieName) => ([ ...dependenciesList, container[dependencieName]]), 
                 []))
-
-        this.service(fn.name, (container) => obj ? boundFn() : boundFn)
+            return obj ? boundFn() : boundFn
+        })
         
     }
 
