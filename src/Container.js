@@ -1,7 +1,7 @@
 class Container {
     constructor(data){
         this.services = {}
-        data && this.json(data)
+        // data && this.json(data)
     }
 
     service(name, cb){
@@ -32,23 +32,23 @@ class Container {
         
     }
 
-    batch(list) {
-        list.reduce((c, fn) => c.register(fn), this)
-    }
+    // batch(list) {
+    //     list.reduce((c, fn) => c.register(fn), this)
+    // }
     
-    json(list) {
-        this.batch(
-            list.map(this.require)
-        )
-    }
+    // json(list) {
+    //     this.batch(
+    //         list.map(this.require)
+    //     )
+    // }
 
-    require(filepath) {
-        return require(this.path(filepath))
-    }
+    // require(filepath) {
+    //     return require(this.path(filepath))
+    // }
 
-    path(filepath) {
-        return `../${filepath}`
-    }
+    // path(filepath) {
+    //     return `../${filepath}`
+    // }
 
 }
 
