@@ -24,6 +24,9 @@ class Container {
         const { inject, autoCall } = fn
 
         this.service(fn.name, (container) => {
+            console.log('inject', inject)
+            console.log('autoCall', autoCall)
+            console.log('fn', fn)
             if (inject && inject.length === 1 && autoCall) {
                 return fn(container[inject[0]])
             }
