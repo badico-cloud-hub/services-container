@@ -25,7 +25,7 @@ class Container {
 
         this.service(fn.name, (container) => {
             if (inject.length === 1 && autoCall) {
-                return fn(c[inject[0]])
+                return fn(container[inject[0]])
             }
             const boundFn = fn.bind(null,...(inject || []).reduce(
                 (dependenciesList, dependencieName) => ([ ...dependenciesList, container[dependencieName]]), 
