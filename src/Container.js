@@ -23,7 +23,10 @@ class Container {
     register(fn) {
         const { inject, autoCall } = fn
 
-        this.service(fn.name, (container) => { 
+        this.service(fn.name, (container) => {
+            if (inject.length === 1 && autoCall) {
+                return fn(c[inject[0]])
+            }
             const boundFn = fn.bind(null,...(inject || []).reduce(
                 (dependenciesList, dependencieName) => ([ ...dependenciesList, container[dependencieName]]), 
                 []))
