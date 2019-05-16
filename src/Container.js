@@ -1,6 +1,6 @@
 class Container {
     constructor(data){
-        this.checkConfiguration(data)
+        // this.checkConfiguration(data)
         this.services = {}
 
         // data && this.json(data)
